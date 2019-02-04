@@ -13,16 +13,17 @@ resources:
         methodMatch: ^(GET|DELETE|PUT|POST)$
         value: $.resource.properties.id
 
-      - fieldName: X-API-KEY
-        location: HEADER
-        value: >
-          $.concat("{{ properties["API_KEY"] }}")
+      - fieldName: id
+        location: BODY
+        methodMatch: ^(DELETE|PUT)$
+        value: $.resource.properties.id 
+
 
 - name: add-task
   action: {{ RC_TYPE_PROVIDER }}
   metadata:
     runtimePolicy:
-    - CREATE
+    - UPDATE_ON_CHANGE
     dependsOn:
     - tasks-type-provider
   properties:
